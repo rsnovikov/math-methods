@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from "react";
+import axios from "axios";
+
+const API_URL = 'http://localhost:8888/api'
 
 interface ITypesOfEquation {
     id: string;
@@ -24,41 +27,6 @@ interface IRequestData {
     id: string;
 }
 
-const TYPES_OF_EQUATION: ITypesOfEquation[] = [
-    {
-        id: String(Date.now()),
-        title: "Метод половинного деления",
-        params: {
-            a: {
-                name: 'a',
-                label: 'Левая граница a',
-                value: ''
-            },
-            b: {
-                name: 'b',
-                label: 'Правая граница b',
-                value: ''
-            },
-        }
-    },
-    {
-        id: String(Math.floor(Math.random() * 10e10)),
-        title: "Метод Ньютона",
-        params: {
-            c: {
-                name: 'c',
-                label: 'Левая граница c',
-                value: ''
-            },
-            d: {
-                name: 'b',
-                label: 'Правая граница d',
-                value: ''
-            },
-        }
-    },
-]
-
 const Calculator: React.FC = () => {
     const [typesOfEquation, setTypesOfEquation] = useState<ITypesOfEquation[] | []>([]);
     const [currentType, setCurrentType] = useState<ITypesOfEquation | {}>({});
@@ -67,10 +35,20 @@ const Calculator: React.FC = () => {
     const [currentAccuracy, setCurrentAccuracy] = useState<number>(0.01);
     const [result, setResult] = useState<string>('');
     useEffect(() => {
-        setTypesOfEquation(TYPES_OF_EQUATION);
-        setCurrentType(TYPES_OF_EQUATION[0]);
-        setCurrentParams(TYPES_OF_EQUATION[0].params);
+        getTypesOfEquation();
     }, []);
+
+    const getTypesOfEquation = async () => {
+        try {
+            const data = (await axios.get<ITypesOfEquation[] >(`${API_URL}/calculator`)).data;
+            setTypesOfEquation(data);
+            setCurrentType(data[0]);
+            setCurrentParams(data[0].params);
+        } catch (e) {
+            alert(e);
+        }
+    }
+
 
     const selectChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const type = typesOfEquation.find(type => type.id === event.target.value) || {};

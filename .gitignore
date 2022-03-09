@@ -1,11 +1,12 @@
 # dependencies
+old-server
 node_modules
 .pnp
 .pnp.js
 .idea
+dist
 # testing
 /coverage
-
 # production
 /client/build
 
