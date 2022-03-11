@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {ITypesOfEquation} from "./calculator";
+import {EqualBodyDto} from "./dto/get-method.dto";
+import halfDiv from "./methods/methodHalfDivision";
 
 const TYPES_OF_EQUATION: ITypesOfEquation[] = [
     {
-        id: String(Date.now()),
+        id: '1',
         title: "Метод половинного деления",
         params: {
             a: {
@@ -40,5 +42,12 @@ const TYPES_OF_EQUATION: ITypesOfEquation[] = [
 export class CalculatorService {
     getTypesOfEquation() {
         return TYPES_OF_EQUATION;
+    }
+    getAnswer(equalDataDto:EqualBodyDto) {
+        switch (equalDataDto.id){
+            case '1':
+                const {equation,params,accuracy} = equalDataDto;
+                return halfDiv(equation,Number(params.a.value),Number(params.b.value),accuracy);
+        }
     }
 }
