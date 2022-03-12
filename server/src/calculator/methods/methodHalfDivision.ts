@@ -10,7 +10,7 @@ const calc = (func, a, b, epsilon) => {
   let c: number;
   while (b - a > epsilon) {
     c = (a + b) / 2;
-    if (func(b) * func(c) < 0) {
+    if (Algebrite.eval(func, 'x', b).d * Algebrite.eval(func, 'x', c).d < 0) {
       a = c;
     } else {
       b = c;
@@ -23,6 +23,5 @@ const calc = (func, a, b, epsilon) => {
 // console.log(derivedEquation);
 // const roots = Algebrite.roots(derivedEquation).toString();
 // console.log(roots);
-const f = createFn('x^3 - 2 * x ^ 2 - 4 * x + 5');
-
-console.log(calc(f, -2, -1, 1e-2));
+console.log(Algebrite.eval('x^3 - 2 * x ^ 2 - 4 * x + 5', 'x', 0.515625).d)
+console.log(calc('x^3 - 2 * x ^ 2 - 4 * x + 5', -2, -1, 0.001));
