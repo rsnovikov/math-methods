@@ -1,16 +1,10 @@
 const Algebrite = require('algebrite');
 
-const createFn = (strFn) => {
-  return (x) => {
-    return eval(strFn.replaceAll('^', '**'));
-  }
-}
-
-const calc = (func, a, b, epsilon) => {
+const halfDiv = (func:string, a:number, b:number, epsilon:number) => {
   let c: number;
-  while (b - a > epsilon) {
+  while ((b - a)/2 > epsilon) {
     c = (a + b) / 2;
-    if (Algebrite.eval(func, 'x', b).d * Algebrite.eval(func, 'x', c).d < 0) {
+    if (getNum(Algebrite.eval(func,'x',b)) * getNum(Algebrite.eval(func,'x',c)) < 0) {
       a = c;
     } else {
       b = c;
@@ -18,10 +12,5 @@ const calc = (func, a, b, epsilon) => {
   }
   return (a + b) / 2;
 }
-// DERIVATIVE
-// const derivedEquation = Algebrite.derivative('x^3 - 2 * x ^ 2 - 4 * x + 5').toString();
-// console.log(derivedEquation);
-// const roots = Algebrite.roots(derivedEquation).toString();
-// console.log(roots);
-console.log(Algebrite.eval('x^3 - 2 * x ^ 2 - 4 * x + 5', 'x', 0.515625).d)
-console.log(calc('x^3 - 2 * x ^ 2 - 4 * x + 5', -2, -1, 0.001));
+const getNum = (obj:any) => obj.d == 0 ? Number(obj) : obj.d;
+export default halfDiv;

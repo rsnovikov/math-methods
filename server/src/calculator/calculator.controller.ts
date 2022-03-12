@@ -1,5 +1,6 @@
 import {Get, Controller, Header, Post, Body} from '@nestjs/common';
 import {CalculatorService} from "./calculator.service";
+import {EqualBodyDto} from "./dto/get-method.dto";
 
 @Controller('api/calculator')
 export class CalculatorController {
@@ -10,9 +11,8 @@ export class CalculatorController {
     get() {
         return this.CalculatorService.getTypesOfEquation()
     }
-    // @Post(@Body() postEquationDataDto: )
-    // post() {
-    //
-    //
-    // }
+    @Post()
+    postEqual(@Body() equalDataDto:EqualBodyDto) {
+        return this.CalculatorService.getAnswer(equalDataDto);
+    }
 }
