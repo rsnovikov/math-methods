@@ -1,4 +1,4 @@
-import {Get, Controller, Header} from '@nestjs/common';
+import {Get, Controller, Header, Post, Body} from '@nestjs/common';
 import {CalculatorService} from "./calculator.service";
 
 @Controller('api/calculator')
@@ -10,4 +10,9 @@ export class CalculatorController {
     get() {
         return this.CalculatorService.getTypesOfEquation()
     }
+    // @Post(@Body() postEquationDataDto: )
+    // post() {
+    //
+    //
+    // }
 }

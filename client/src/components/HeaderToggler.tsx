@@ -10,7 +10,7 @@ const HeaderToggler: React.FC<HeaderTogglerProps> = ({onClick}) : React.ReactEle
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"/>
         </button>
-    )
+    );
 }
 
 export default HeaderToggler;
