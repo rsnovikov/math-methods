@@ -11,7 +11,7 @@ const NavItem = ({ children,className,...props}: NavLinkProps) => {
                 {children}
             </NavLink>
         </li>
-    )
+    );
 }
 
 export default NavItem;

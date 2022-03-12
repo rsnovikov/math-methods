@@ -1,38 +1,20 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-
-const API_URL = 'http://localhost:8888/api'
-
-interface ITypesOfEquation {
-    id: string;
-    title: string;
-    params: IParams;
-}
-
-interface IParams {
-    [key: string]: IParam;
-}
-
-interface IParam {
-    name: string;
-    label: string;
-    value?: string;
-    placeholder?: string;
-}
-
-interface IRequestData {
-    equation: string;
-    accuracy: number;
-    params: IParams;
-    id: string;
-}
+import CalculatorSelect from "./CalculatorSelect";
+import CalculatorParams from "../components/CalculatorParams";
+import {ITypeOfEquation, IParams, IRequestData} from "../types/calculator";
+import CalculatorInput from "../components/UI/CalculatorInput";
+import Loader from "../components/UI/Loader";
 
 const Calculator: React.FC = () => {
-    const [typesOfEquation, setTypesOfEquation] = useState<ITypesOfEquation[] | []>([]);
-    const [currentType, setCurrentType] = useState<ITypesOfEquation | {}>({});
+    const [typesOfEquation, setTypesOfEquation] = useState<ITypeOfEquation[] | []>([]);
+    const [currentType, setCurrentType] = useState<ITypeOfEquation | {}>({});
     const [currentParams, setCurrentParams] = useState<IParams | {}>({});
     const [currentEquation, setCurrentEquation] = useState<string>('');
     const [currentAccuracy, setCurrentAccuracy] = useState<number>(0.01);
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
     const [result, setResult] = useState<string>('');
     useEffect(() => {
         getTypesOfEquation();
@@ -40,33 +22,55 @@ const Calculator: React.FC = () => {
 
     const getTypesOfEquation = async () => {
         try {
-            const data = (await axios.get<ITypesOfEquation[] >(`${API_URL}/calculator`)).data;
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/calculator`);
+            const data = response.data;
             setTypesOfEquation(data);
             setCurrentType(data[0]);
             setCurrentParams(data[0].params);
         } catch (e) {
-            alert(e);
+            setError(String(e));
         }
     }
 
+    const getResult = async (requestData: IRequestData) => {
+        try {
 
-    const selectChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const type = typesOfEquation.find(type => type.id === event.target.value) || {};
-        setCurrentType(type);
-        setCurrentParams((type as ITypesOfEquation)?.params || {})
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/calculator`, requestData);
+            const data = response.data;
+            setResult(data);
+        } catch (e) {
+            setError(String(e));
+        } finally {
+
+        }
     }
 
+    const selectChangeHandler : React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        const type = typesOfEquation.find(type => type.id === event.target.value) || {};
+        setCurrentType(type);
+        setCurrentParams((type as ITypeOfEquation)?.params || {})
+    }
 
     const formSubmitHandler = (event: React.FormEvent) => {
         event.preventDefault();
         const requestData: IRequestData = {
             equation: currentEquation,
-            id: (currentType as ITypesOfEquation).id,
+            id: (currentType as ITypeOfEquation).id,
             accuracy: currentAccuracy,
             params: currentParams
         };
-        setResult('x^2');
+        getResult(requestData);
         console.log(requestData);
+    }
+
+    const paramChangeHandler = (event : React.ChangeEvent<HTMLInputElement>, key : string) => {
+        setCurrentParams({
+            ...currentParams,
+            [key]: {
+                ...(currentParams as IParams)[key],
+                value: event.target.value
+            }
+        })
     }
 
     return (
@@ -74,76 +78,39 @@ const Calculator: React.FC = () => {
             <h1>Калькулятор</h1>
             <form onSubmit={formSubmitHandler}>
                 <fieldset>
-                    <div className="mb-3">
-                        <label htmlFor="equation" className="form-label">Функция</label>
-                        <input
+                    <CalculatorInput
                             type="text"
                             id="equation"
                             className="form-control"
                             placeholder="f(x)"
                             value={currentEquation}
-                            onChange={event => setCurrentEquation(event.target.value)}
+                            onChange={(event : React.ChangeEvent<HTMLInputElement>) => setCurrentEquation(event.target.value)}
                         />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="accuracy" className="form-label">Точность</label>
-                        <input
+                    <CalculatorInput
                             type="number"
                             id="accuracy"
                             className="form-control"
-                            value={currentAccuracy}
-                            onChange={event => setCurrentAccuracy(Number(event.target.value))}
+                            value={String(currentAccuracy)}
+                            onChange={(event : React.ChangeEvent<HTMLInputElement>) => setCurrentAccuracy(Number(event.target.value))}
                         />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="method" className="form-label">Выберите метод решения</label>
-                        <select
-                            id="method"
-                            onChange={selectChangeHandler}
-                            className="form-select"
-                        >
-                            {
-                                typesOfEquation.map(type => {
-                                    return <option value={type.id} key={type.id}>{type.title}</option>
-                                })
-                            }
-
-                        </select>
-                    </div>
+                    <CalculatorSelect changeHandler={selectChangeHandler} typesOfEquation={typesOfEquation}/>
                     <hr/>
-
-                    {
-                        Object.entries(currentParams)?.map(([key, param]) => (
-                            <div className="mb-3" key={param.name}>
-                                <label htmlFor={param.name} className="form-label">{param.label}</label>
-                                <input
-                                    type="text"
-                                    id={param.name}
-                                    className="form-control"
-                                    placeholder={param.placeholder}
-                                    name={param.name}
-                                    value={param.value}
-                                    onChange={(event) => {
-                                        setCurrentParams({
-                                            ...currentParams,
-                                            [key]: {
-                                                ...(currentParams as IParams)[key],
-                                                value: event.target.value
-                                            }
-                                        })
-                                    }}
-                                />
-                            </div>
-                        ))
-                    }
+                    <CalculatorParams paramsData={currentParams} paramChangeHandler={paramChangeHandler}/>
                     <button type="submit" className="btn btn-dark">Submit</button>
-
                 </fieldset>
             </form>
 
-            <strong>
-                {result}
-            </strong>
+            {
+                isLoading
+                    ? <Loader/>
+                    : (
+                        error
+                            ? error
+                            : <strong>
+                                {result}
+                            </strong>
+                    )
+            }
         </div>
     )
 }
