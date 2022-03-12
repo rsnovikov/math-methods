@@ -41,6 +41,9 @@ const TYPES_OF_EQUATION: ITypesOfEquation[] = [
 @Injectable()
 export class CalculatorService {
     getTypesOfEquation() {
+        for (let i = 0; i < 100000; i++) {
+            console.log(i);
+        }
         return TYPES_OF_EQUATION;
     }
     getAnswer(equalDataDto:EqualBodyDto) {
