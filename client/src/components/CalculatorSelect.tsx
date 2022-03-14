@@ -1,14 +1,12 @@
 import React from "react";
-import {ITypeOfEquation} from "../types/calculator";
+import {IMethod} from "../types/types";
 
 interface ICalculatorSelectProps {
     changeHandler: React.ChangeEventHandler<HTMLSelectElement>;
-    typesOfEquation: ITypeOfEquation[];
+    methods: IMethod[];
 }
 
-
-
-const CalculatorSelect : React.FC<ICalculatorSelectProps> = ({changeHandler, typesOfEquation}) => {
+const CalculatorSelect : React.FC<ICalculatorSelectProps> = ({changeHandler, methods}) => {
     return (
         <div className="mb-3">
             <label htmlFor="method" className="form-label">Выберите метод решения</label>
@@ -18,8 +16,8 @@ const CalculatorSelect : React.FC<ICalculatorSelectProps> = ({changeHandler, typ
                 className="form-select"
             >
                 {
-                    typesOfEquation.map((type : ITypeOfEquation) => {
-                        return <option value={type.id} key={type.id}>{type.title}</option>
+                    methods?.map((method) => {
+                        return <option value={method.id} key={method.id}>{method.title}</option>
                     })
                 }
 
