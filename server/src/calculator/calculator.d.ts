@@ -14,3 +14,9 @@ export interface IParam {
     value?: string;
     placeholder?: string;
 }
+
+export interface IMethod {
+    id: string;
+    title: string;
+    params: IParam[];
+}

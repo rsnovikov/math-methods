@@ -1,18 +1,23 @@
 import {Get, Controller, Header, Post, Body} from '@nestjs/common';
 import {CalculatorService} from "./calculator.service";
-import {EqualBodyDto} from "./dto/get-method.dto";
+import {PostEquationTaskBodyDto} from "./dto/post-equation-data.dto";
 
 @Controller('api/calculator')
 export class CalculatorController {
-    constructor(private readonly CalculatorService: CalculatorService) {
-    }
+    constructor(private readonly CalculatorService: CalculatorService) {}
+
     @Get()
-    @Header('Access-Control-Allow-Origin', 'http://localhost:3000')
-    get() {
-        return this.CalculatorService.getTypesOfEquation()
+    getNav() {
+        return this.CalculatorService.getTaskNav();
     }
+
+    @Get()
+    get() {
+        return this.CalculatorService.getTypeOfEquation('1')
+    }
+
     @Post()
-    postEqual(@Body() equalDataDto:EqualBodyDto) {
-        return this.CalculatorService.getAnswer(equalDataDto);
+    postEqual(@Body() postTaskBodyDto: PostEquationTaskBodyDto) {
+        return this.CalculatorService.getAnswer(postTaskBodyDto);
     }
 }

@@ -1,56 +1,65 @@
-import { Injectable } from '@nestjs/common';
-import {ITypesOfEquation} from "./calculator";
-import {EqualBodyDto} from "./dto/get-method.dto";
+import {Injectable} from '@nestjs/common';
 import halfDiv from "./methods/methodHalfDivision";
+import {PostEquationTaskBodyDto} from "./dto/post-equation-data.dto";
 
-const TYPES_OF_EQUATION: ITypesOfEquation[] = [
+const NEW_TYPES_OF_TASKS = [
     {
         id: '1',
-        title: "Метод половинного деления",
-        params: {
-            a: {
-                name: 'a',
-                label: 'Левая граница a',
-                value: ''
-            },
-            b: {
-                name: 'b',
-                label: 'Правая граница b',
-                value: ''
-            },
-        }
+        title: 'Решение уравнения',
+        type: 'equation',
+        methods: [
+            {
+                id: '1',
+                title: 'Метод половинного деления',
+                params: [
+                    {
+                        name: 'a',
+                        label: 'Левая граница a',
+                    }, {
+                        name: 'b',
+                        label: 'Правая граница b',
+                    },
+                ]
+            }
+        ]
     },
     {
-        id: String(Math.floor(Math.random() * 10e10)),
-        title: "Метод Ньютона",
-        params: {
-            c: {
-                name: 'c',
-                label: 'Левая граница c',
-                value: ''
-            },
-            d: {
-                name: 'b',
-                label: 'Правая граница d',
-                value: ''
-            },
-        }
+        id: '2',
+        title: 'Решение системы уравнений',
+        type: 'systemOfEquation',
+        methods: [
+            {
+                id: '1',
+                title: 'Метод половинного деления',
+                params: [
+                    {
+                        name: 'a',
+                        label: 'Левая граница a',
+                    }, {
+                        name: 'b',
+                        label: 'Правая граница b',
+                    },
+                ]
+            }
+        ]
     },
 ]
 
 @Injectable()
 export class CalculatorService {
-    getTypesOfEquation() {
-        for (let i = 0; i < 100000; i++) {
-            console.log(i);
-        }
-        return TYPES_OF_EQUATION;
+    getTypeOfEquation(id: string) {
+        return NEW_TYPES_OF_TASKS.find(type => type.id === id);
     }
-    getAnswer(equalDataDto:EqualBodyDto) {
-        switch (equalDataDto.id){
+
+    getAnswer(postTaskBodyDto: PostEquationTaskBodyDto) {
+        switch (postTaskBodyDto.id) {
             case '1':
-                const {equation,params,accuracy} = equalDataDto;
-                return halfDiv(equation,Number(params.a.value),Number(params.b.value),accuracy);
+                const {equation, accuracy, params} = postTaskBodyDto;
+                return halfDiv(equation, Number(params[0].value), Number(params[1].value), accuracy);
         }
+    }
+
+    getTaskNav() {
+        return NEW_TYPES_OF_TASKS;
     }
 }

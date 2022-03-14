@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import HeaderToggler from "./HeaderToggler";
-import NavList from "./NavList";
+import PagesNavList from "./PagesNavList";
+import {Link} from "react-router-dom";
 
 
 const Header : React.FC = () => {
@@ -12,11 +13,11 @@ const Header : React.FC = () => {
     return (
         <header className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
-                <a className="navbar-brand" href="#">Численные методы</a>
+                <Link to={'/'} className="navbar-brand">Численные методы</Link>
                 <HeaderToggler onClick={HeaderTogglerHandler}/>
                 <div className={`collapse navbar-collapse ${isShowMenu ? 'show' : ''}`} id="navbarNav">
                     <nav>
-                     <NavList/>
+                     <PagesNavList/>
                     </nav>
                 </div>
             </div>
