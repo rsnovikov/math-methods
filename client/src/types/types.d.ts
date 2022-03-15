@@ -8,7 +8,8 @@ export interface ITypeOfTask {
 export interface IMethod {
     id: string;
     title: string;
-    params: IParam[];
+    type: string;
+    params: IParams | {};
 }
 
 export interface IParam {
@@ -23,9 +24,16 @@ export interface IParam {
 export interface IEquationTaskData {
     id: string | null;
     equation: string;
-    accuracy: number;
     methodId: string | null;
-    params: IParam[];
+    methodType: string | null;
+    params: {
+        [key: string]: string
+    };
+    type: string;
+}
+
+export interface IParams {
+    [key: string]: IParam;
 }
 
 export interface ITaskNavItem {

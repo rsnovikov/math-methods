@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import Loader from "./UI/Loader";
+import LoadingAndError from "../hoc/LoadingAndError";
 
 interface ICalculatorResult {
     isLoading: boolean;
@@ -9,13 +9,11 @@ interface ICalculatorResult {
 
 const CalculatorResult: FC<ICalculatorResult> = ({isLoading, errorMessage, result}) => {
     return (
-        <div className="mt-10">
-            {
-                isLoading
-                    ? <Loader/>
-                    : errorMessage || result
-            }
-        </div>
+        <LoadingAndError isLoading={isLoading} errorMessage={errorMessage}>
+            <div className="mt-10">
+                <strong>{result}</strong>
+            </div>
+        </LoadingAndError>
     );
 }
 

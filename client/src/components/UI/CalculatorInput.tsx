@@ -10,8 +10,8 @@ interface ICalculatorInputProps {
     className?: string;
 }
 
-const CalculatorInput : React.FC<ICalculatorInputProps> = ({label, ...props}) => {
-    return(
+const CalculatorInput: React.FC<ICalculatorInputProps> = ({label, ...props}) => {
+    return (
         <div className="mb-3">
             <label htmlFor="equation" className="form-label">{label}</label>
             <input

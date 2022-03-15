@@ -1,62 +1,92 @@
 import {Injectable} from '@nestjs/common';
 import halfDiv from "./methods/methodHalfDivision";
-import {PostEquationTaskBodyDto} from "./dto/post-equation-data.dto";
+import {PostTaskEquationDto} from "./dto/post-equation-task.dto";
+import {ETypesOfEquation, IEquationMethodProps, IParams, ITypeOfTask} from "./calculatorTypes";
 
-const NEW_TYPES_OF_TASKS = [
+const equationParams: IParams = {
+    accuracy: {
+        id: '1',
+        name: 'accuracy',
+        label: 'Точность'
+    },
+    a: {
+        id: '2',
+        name: 'a',
+        label: 'Левая граница a'
+    },
+    b: {
+        id: '3',
+        name: 'b',
+        label: 'Правая граница b'
+    }
+};
+
+const NEW_TYPES_OF_TASKS: ITypeOfTask[] = [
     {
         id: '1',
         title: 'Решение уравнения',
-        type: 'equation',
+        type: ETypesOfEquation.equation,
         methods: [
             {
                 id: '1',
                 title: 'Метод половинного деления',
-                params: [
-                    {
-                        name: 'a',
-                        label: 'Левая граница a',
-                    }, {
-                        name: 'b',
-                        label: 'Правая граница b',
-                    },
-                ]
+                type: 'halfDiv',
+                params: equationParams
+            },
+            {
+                id: '2',
+                title: 'Метод простых итераций',
+                type: 'simpleIter',
+                params: equationParams
             }
         ]
     },
     {
         id: '2',
         title: 'Решение системы уравнений',
-        type: 'systemOfEquation',
+        type: ETypesOfEquation.systemOfEquation,
         methods: [
             {
                 id: '1',
-                title: 'Метод половинного деления',
-                params: [
-                    {
-                        name: 'a',
-                        label: 'Левая граница a',
-                    }, {
-                        name: 'b',
-                        label: 'Правая граница b',
-                    },
-                ]
+                title: 'Метод Гауса',
+                type: 'halfDiv',
+                params: equationParams
+            },
+            {
+                id: '2',
+                title: 'Метод простых итераций',
+                type: 'simpleIter',
+                params: equationParams
             }
         ]
-    },
+    }
 ]
+
 
 @Injectable()
 export class CalculatorService {
-    getTypeOfEquation(id: string) {
-        return NEW_TYPES_OF_TASKS.find(type => type.id === id);
+    getTypeOfEquation(type: string) {
+        return NEW_TYPES_OF_TASKS.find(typeOfTask => typeOfTask.type === type);
     }
 
-    getAnswer(postTaskBodyDto: PostEquationTaskBodyDto) {
-        switch (postTaskBodyDto.id) {
-            case '1':
-                const {equation, accuracy, params} = postTaskBodyDto;
-                return halfDiv(equation, Number(params[0].value), Number(params[1].value), accuracy);
+    postEquationAnswer(postTaskEquationDto: PostTaskEquationDto) {
+        const {equation, params} = postTaskEquationDto;
+        const equationProps: IEquationMethodProps = {
+            equation,
+            a: +params.a,
+            b: +params.b,
+            accuracy: +params.accuracy
         }
+        switch (postTaskEquationDto.methodType) {
+            case 'halfDiv':
+                return halfDiv(equationProps);
+            case 'simpleIter':
+                return 'x^2';
+        }
+    }
+
+    postSystemOfEquations() {
+        return 'system';
     }
 
     getTaskNav() {

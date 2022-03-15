@@ -1,27 +1,31 @@
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import NavItem from "../components/NavItem";
 import {ITaskNavItem} from "../types/types";
 import {requestToServer} from "../axios/requests";
+import LoadingAndError from "../hoc/LoadingAndError";
 
-const TasksNav: React.FC = () => {
+const TasksNav: FC = () => {
 
     const [tasksNavData, setTasksNavData] = useState<ITaskNavItem[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
     useEffect(() => {
-        requestToServer(setTasksNavData, setIsLoading, setErrorMessage, '').then(data => console.log(data));
+        requestToServer(setTasksNavData, setIsLoading, setErrorMessage, '');
     }, []);
 
     return (
         <div className="container">
-            <nav className="nav flex-column">
-                {
-                    tasksNavData.map(taskNavItem => (
-                        <NavItem to={`calculator/${taskNavItem.type}`} key={taskNavItem.id}>{taskNavItem.title}</NavItem>
-                    ))
-                }
-            </nav>
+            <LoadingAndError isLoading={isLoading} errorMessage={errorMessage}>
+                <nav className="nav flex-column">
+                    {
+                        tasksNavData.map(taskNavItem => (
+                            <NavItem to={`calculator/${taskNavItem.type}`}
+                                     key={taskNavItem.id}>{taskNavItem.title}</NavItem>
+                        ))
+                    }
+                </nav>
+            </LoadingAndError>
         </div>
     );
 }
