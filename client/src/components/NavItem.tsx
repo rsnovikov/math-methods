@@ -1,7 +1,7 @@
 import {NavLink, NavLinkProps} from "react-router-dom";
 import React from "react";
 
-const NavItem = ({ children,className,...props}: NavLinkProps) => {
+const NavItem = ({children, className, ...props}: NavLinkProps) => {
     return (
         <li className="nav-item">
             <NavLink

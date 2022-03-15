@@ -6,7 +6,7 @@ interface ICalculatorSelectProps {
     methods: IMethod[];
 }
 
-const CalculatorSelect : React.FC<ICalculatorSelectProps> = ({changeHandler, methods}) => {
+const CalculatorSelect: React.FC<ICalculatorSelectProps> = ({changeHandler, methods}) => {
     return (
         <div className="mb-3">
             <label htmlFor="method" className="form-label">Выберите метод решения</label>
@@ -23,7 +23,7 @@ const CalculatorSelect : React.FC<ICalculatorSelectProps> = ({changeHandler, met
 
             </select>
         </div>
-    )
+    );
 }
 
 export default CalculatorSelect;

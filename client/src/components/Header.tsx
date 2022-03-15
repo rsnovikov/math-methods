@@ -4,7 +4,7 @@ import PagesNavList from "./PagesNavList";
 import {Link} from "react-router-dom";
 
 
-const Header : React.FC = () => {
+const Header: React.FC = () => {
     const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
     const HeaderTogglerHandler = () => {
         setIsShowMenu(!isShowMenu);
@@ -17,7 +17,7 @@ const Header : React.FC = () => {
                 <HeaderToggler onClick={HeaderTogglerHandler}/>
                 <div className={`collapse navbar-collapse ${isShowMenu ? 'show' : ''}`} id="navbarNav">
                     <nav>
-                     <PagesNavList/>
+                        <PagesNavList/>
                     </nav>
                 </div>
             </div>
