@@ -1,6 +1,6 @@
 import {evaluate} from 'mathjs';
 import {IEquationMethodProps} from "../calculatorTypes";
-import {slauComp} from "./methodSLAU";
+import {methodNewton} from "./methodNewton";
 
 const halfDiv = ({equation, a, b, accuracy} : IEquationMethodProps) => {
     let c: number;
@@ -21,6 +21,6 @@ let mtx:number[][]=
         [-1,1,10,10]];
 
 
-console.log(slauComp(mtx,0.00001));
+console.log(methodNewton('x^3 - 2 * x ^ 2 - 4 * x + 5',-10,0,0.001));
 
 export default halfDiv;
