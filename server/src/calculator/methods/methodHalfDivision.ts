@@ -1,5 +1,6 @@
 import {evaluate} from 'mathjs';
 import {IEquationMethodProps} from "../calculatorTypes";
+import {slauComp} from "./methodSLAU";
 
 const halfDiv = ({equation, a, b, accuracy} : IEquationMethodProps) => {
     let c: number;
@@ -10,10 +11,16 @@ const halfDiv = ({equation, a, b, accuracy} : IEquationMethodProps) => {
         } else {
             b = c;
         }
-        counter++;
+       ;
     }
-    console.log(counter);
     return (a + b) / 2;
 }
+let mtx:number[][]=
+    [[10,1,-1,11],
+        [1,10,-1,10],
+        [-1,1,10,10]];
+
+
+console.log(slauComp(mtx,0.00001));
 
 export default halfDiv;
