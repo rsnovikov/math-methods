@@ -7,6 +7,7 @@ import {requestToServer} from "../axios/requests";
 import {useParams} from "react-router-dom";
 import CalculatorResult from "../components/CalculatorResult";
 import LoadingAndError from "../hoc/LoadingAndError";
+import CalculatorGraph from "../components/CalculatorGraph";
 
 const Calculator: React.FC = () => {
     const {type} = useParams();
@@ -67,12 +68,13 @@ const Calculator: React.FC = () => {
                             value={currentEquation}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCurrentEquation(event.target.value)}
                         />
+                        <CalculatorGraph/>
                         <CalculatorSelect changeHandler={selectChangeHandler}
                                           methods={(typeOfTask as ITypeOfTask).methods}/>
                         <hr/>
                         <CalculatorParams paramsData={(currentMethod as IMethod).params || {}}
                                           paramChangeHandler={paramChangeHandler}/>
-                        <button type="submit" className="btn btn-dark">Submit</button>
+                        <button type="submit" className="btn btn-dark">Решить</button>
                     </fieldset>
                 </form>
                 <CalculatorResult isLoading={isResultLoading} errorMessage={resultError} result={result}/>

@@ -10,9 +10,7 @@ const halfDiv = ({equation, a, b, accuracy} : IEquationMethodProps) => {
         } else {
             b = c;
         }
-        counter++;
     }
-    console.log(counter);
     return (a + b) / 2;
 }
 
