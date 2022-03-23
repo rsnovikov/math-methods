@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import HeaderToggler from "./HeaderToggler";
-import PagesNavList from "./PagesNavList";
+import HeaderToggler from "./headerToggler";
+import PagesNavList from "./pagesNavList";
 import {Link} from "react-router-dom";
 
 

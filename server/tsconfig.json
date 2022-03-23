@@ -17,8 +17,12 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+<<<<<<< HEAD
     "lib": [
       "ES2021.String"
     ]
+=======
+    "lib": ["ES2021.String"]
+>>>>>>> 845d2fcf4d6a8fe15ee8a1e44f9801008b2d7d4e
   }
 }

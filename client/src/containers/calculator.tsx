@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import CalculatorSelect from "../components/CalculatorSelect";
-import CalculatorParams from "../components/CalculatorParams";
+import CalculatorSelect from "../components/calculatorSelect";
+import CalculatorParams from "../components/calculatorParams";
 import {ITypeOfTask, IEquationTaskData, IMethod} from "../types/types";
-import CalculatorInput from "../components/UI/CalculatorInput";
+import CalculatorInput from "../components/UI/calculatorInput";
 import {requestToServer} from "../axios/requests";
 import {useParams} from "react-router-dom";
-import CalculatorResult from "../components/CalculatorResult";
-import LoadingAndError from "../hoc/LoadingAndError";
-import CalculatorGraph from "../components/CalculatorGraph";
+import CalculatorResult from "../components/calculatorResult";
+import LoadingAndError from "../hoc/loadingAndError";
+import CalculatorGraph from "../components/calculatorGraph";
 
 const Calculator: React.FC = () => {
     const {type} = useParams();

@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from "./components/Header";
-import Calculator from "./containers/Calculator";
+import Header from "./components/header";
+import Calculator from "./containers/calculator";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import About from "./containers/About";
-import TasksNav from "./containers/TasksNav";
+import About from "./containers/about";
+import TasksNav from "./containers/tasksNav";
 
 function App() {
   return (

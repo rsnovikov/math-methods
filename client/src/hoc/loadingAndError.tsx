@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from "react";
-import Loader from "../components/UI/Loader";
-import ErrorBlock from "../components/UI/ErrorBlock";
+import Loader from "../components/UI/loader";
+import ErrorBlock from "../components/UI/errorBlock";
 
 interface ILoadingAndErrorProps {
     isLoading: boolean;

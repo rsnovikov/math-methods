@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useState} from "react";
-import NavItem from "../components/NavItem";
+import NavItem from "../components/navItem";
 import {ITaskNavItem} from "../types/types";
 import {requestToServer} from "../axios/requests";
-import LoadingAndError from "../hoc/LoadingAndError";
+import LoadingAndError from "../hoc/loadingAndError";
 
 const TasksNav: FC = () => {
 

@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import LoadingAndError from "../hoc/LoadingAndError";
+import LoadingAndError from "../hoc/loadingAndError";
 
 interface ICalculatorResult {
     isLoading: boolean;
