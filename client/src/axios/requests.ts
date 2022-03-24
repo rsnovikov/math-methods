@@ -14,11 +14,11 @@ export const requestToServer = async <T, P, R, S>(
 ) => {
     try {
         setIsLoading(true);
-        console.log(`${API_URL}/calculator/${url}`)
+        console.log(`${API_URL}/calculator${url}`)
         const response = await axios.request<T, AxiosRequestConfig, S>({
             method,
             data: body,
-            url: `${API_URL}/calculator/${url}`
+            url: `${API_URL}/calculator${url}`
         });
         const data = response.data;
         setData(data);

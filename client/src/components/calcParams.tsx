@@ -1,12 +1,12 @@
 import React from "react";
 import {IParams} from "../types/types";
 
-interface ICalculatorParams {
+interface ICalcParams {
     paramsData: IParams;
     paramChangeHandler: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
 }
 
-const CalculatorParams: React.FC<ICalculatorParams> = ({paramsData, paramChangeHandler}) => {
+const CalcParams: React.FC<ICalcParams> = ({paramsData, paramChangeHandler}) => {
     return (
         <>
             {
@@ -30,4 +30,4 @@ const CalculatorParams: React.FC<ICalculatorParams> = ({paramsData, paramChangeH
     )
 }
 
-export default CalculatorParams;
+export default CalcParams;

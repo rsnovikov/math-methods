@@ -1,9 +1,12 @@
-import {Injectable} from '@nestjs/common';
-import halfDiv from "./methods/methodHalfDivision";
-import {PostTaskEquationDto} from "./dto/post-equation-task.dto";
-import {IEquationMethodProps} from "./calculatorTypes";
-import simpleIt from "./methods/methodSimpleIt";
+import {Injectable} from "@nestjs/common";
+import equationHalfDiv from "./methods/equationHalfDiv";
+import {PostTaskEquationDto, PostTaskSLAEDto} from "./dto/post-task.dto";
+import {IEquationMethodProps, IResult} from "./calculatorTypes";
 import {typesOfTasks} from "./data/data";
+import SLAESimpleIter from "./methods/SLAESimpleIter";
+import {EEquationMethods, ESLAEMethods} from "./calcEnums";
+import equationSimpleIter from "./methods/equationSimpleIter";
+import equationNewton from "./methods/equationNewton";
 
 
 @Injectable()
@@ -12,24 +15,32 @@ export class CalculatorService {
         return typesOfTasks.find(typeOfTask => typeOfTask.type === type);
     }
 
-    postEquationAnswer(postTaskEquationDto: PostTaskEquationDto) {
-        const {equation, params} = postTaskEquationDto;
+    postEquationAnswer(postTaskEquationDto: PostTaskEquationDto): IResult {
+        console.log(postTaskEquationDto.methodType)
+        const {methodType, expression, params} = postTaskEquationDto;
         const equationProps: IEquationMethodProps = {
-            equation,
+            equation: expression,
             a: +params.a,
             b: +params.b,
             accuracy: +params.accuracy
         };
-        switch (postTaskEquationDto.methodType) {
-            case 'halfDiv':
-                return halfDiv(equationProps);
-            case 'simpleIter':
-                return simpleIt(equationProps);
+        switch (methodType) {
+            case EEquationMethods.halfDiv:
+                return equationHalfDiv(equationProps);
+            case EEquationMethods.simpleIter:
+            return equationSimpleIter(equationProps);
+            case EEquationMethods.newton:
+            return equationNewton(equationProps);
         }
     }
 
-    postSystemOfEquations() {
-        return 'system';
+    postSLAEAnswer(postTaskSLAEDto: PostTaskSLAEDto) {
+        const {expression, methodType, params} = postTaskSLAEDto;
+        console.log(postTaskSLAEDto);
+        switch (methodType) {
+            case ESLAEMethods.simpleIter:
+                return SLAESimpleIter(expression, +params.accuracy);
+        }
     }
 
     getTaskNav() {

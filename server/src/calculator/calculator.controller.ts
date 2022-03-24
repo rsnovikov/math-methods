@@ -1,7 +1,7 @@
 import {Get, Controller, Param, Post, Body} from '@nestjs/common';
 import {CalculatorService} from "./calculator.service";
-import {PostTaskEquationDto} from "./dto/post-equation-task.dto";
-import {ETypesOfEquation} from "./calculatorTypes";
+import {PostTaskDto, PostTaskEquationDto, PostTaskSLAEDto} from "./dto/post-task.dto";
+import {ETypesOfEquation} from "./calcEnums";
 
 @Controller('api/calculator')
 export class CalculatorController {
@@ -18,13 +18,13 @@ export class CalculatorController {
         return this.CalculatorService.getTypeOfEquation(type)
     }
 
-    @Post()
-    postEquation(@Body() postTaskEquationDto: PostTaskEquationDto) {
-        switch (postTaskEquationDto.type) {
-            case ETypesOfEquation.equation:
-                return this.CalculatorService.postEquationAnswer(postTaskEquationDto);
-            case ETypesOfEquation.systemOfEquation:
-                return this.CalculatorService.postSystemOfEquations();
-        }
+    @Post(`/${ETypesOfEquation.equation}`)
+    postEquation(@Body() postTaskEquationDto: PostTaskEquationDto,) {
+        return this.CalculatorService.postEquationAnswer(postTaskEquationDto);
+    }
+
+    @Post(`/${ETypesOfEquation.SLAE}`)
+    postSystemOfEquations(@Body() postTaskSLAEDto: PostTaskSLAEDto) {
+        return this.CalculatorService.postSLAEAnswer(postTaskSLAEDto);
     }
 }
