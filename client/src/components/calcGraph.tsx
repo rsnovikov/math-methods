@@ -1,9 +1,13 @@
 import React, {FC, useEffect, useRef, useState} from "react";
 import {evaluate} from 'mathjs';
+import {Expression} from "../types/types";
 
-const CalculatorGraph: FC = () => {
+interface ICalcGraph {
+    expression: Expression;
+}
+
+const CalcGraph: FC<ICalcGraph> = ({expression}) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const equation = 'x^3 - 2 * x ^ 2 - 4 * x + 5';
     const [ctx, setCtx] = useState<any>(null);
 
     const maxValueY = 7;
@@ -24,8 +28,6 @@ const CalculatorGraph: FC = () => {
     }, []);
 
 
-
-
     const init = (ctx: any) => {
         ctx.beginPath();
         ctx.moveTo(0, dpiHeight / 2);
@@ -39,8 +41,8 @@ const CalculatorGraph: FC = () => {
         ctx.font = 'normal 25px Helvetica, sans-serif';
 
         for (let i = -maxValueX; i <= maxValueX; i += 1) {
-            ctx.moveTo(i*scaleX, 0);
-            ctx.lineTo(i*scaleX, dpiHeight);
+            ctx.moveTo(i * scaleX, 0);
+            ctx.lineTo(i * scaleX, dpiHeight);
             ctx.fillText(`${i}`, dpiWidth / 2 + i * scaleX, dpiHeight / 2);
         }
         ctx.stroke()
@@ -59,8 +61,7 @@ const CalculatorGraph: FC = () => {
         ctx.closePath();
     }
 
-
-    const clickHandler = () => {
+    const drawGraph = (equation: string) => {
         const prev = {
             x: -maxValueX,
             y: evaluate(equation, {x: -maxValueX})
@@ -81,6 +82,19 @@ const CalculatorGraph: FC = () => {
         }
         ctx.stroke();
         ctx.closePath();
+    }
+
+    const clickHandler = () => {
+        if (typeof expression === "string") {
+            ctx.clearRect(0, 0, dpiWidth, dpiHeight);
+            init(ctx);
+            drawGraph(expression);
+        } else if (Array.isArray(expression)) {
+
+            ctx.clearRect(0, 0, dpiWidth, dpiHeight);
+            init(ctx);
+            expression.forEach(exp => drawGraph(exp));
+        }
     }
 
     return (
@@ -104,4 +118,4 @@ const CalculatorGraph: FC = () => {
     );
 }
 
-export default CalculatorGraph;
+export default CalcGraph;

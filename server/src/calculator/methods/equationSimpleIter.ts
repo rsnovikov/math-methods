@@ -1,9 +1,9 @@
 import {evaluate, derivative} from 'mathjs';
-import {IEquationMethodProps} from "../calculatorTypes";
+import {IEquationMethodProps, IResult} from "../calculatorTypes";
 
-import {split} from './utilites';
+import {split} from './util';
 
-const simpleIt = ({equation, a, b, accuracy}: IEquationMethodProps) => {
+const simpleIter = ({equation, a, b, accuracy}: IEquationMethodProps): IResult => {
     const der: string = derivative(equation, 'x').toString();
     const numbers: number[] = [];
     let lambda: number;
@@ -19,17 +19,24 @@ const simpleIt = ({equation, a, b, accuracy}: IEquationMethodProps) => {
         numbers.push(evaluate(der, {x: i}))
     }
     lambda = 1 / Math.max(...numbers);
-
+    console.log(xPrev)
     while (true) {
         xNow = xPrev - lambda * evaluate(equation, {x: xPrev});
         counter++
+        console.log(accuracy)
+        console.log(xPrev)
         if (Math.abs((xNow - xPrev)) < accuracy) {
-            console.log(counter)
-            return xNow;
+            const result: IResult = {
+                interData: {
+                    titles: [],
+                    values: []
+                },
+                answer: xNow
+            };
+            return result;
         }
         xPrev = xNow;
     }
-
 }
 
-export default simpleIt;
+export default simpleIter;

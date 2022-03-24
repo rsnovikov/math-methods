@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ICalculatorInputProps {
+interface ICalcInputProps {
     label?: string;
     value?: string;
     onChange?: React.ChangeEventHandler;
@@ -10,15 +10,16 @@ interface ICalculatorInputProps {
     className?: string;
 }
 
-const CalculatorInput: React.FC<ICalculatorInputProps> = ({label, ...props}) => {
+const CalcInput: React.FC<ICalcInputProps> = ({label, ...props}) => {
     return (
         <div className="mb-3">
             <label htmlFor="equation" className="form-label">{label}</label>
             <input
+                className="form-control"
                 {...props}
             />
         </div>
     );
 }
 
-export default CalculatorInput;
+export default CalcInput;

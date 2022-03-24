@@ -21,9 +21,9 @@ export interface IParam {
     type?: string;
 }
 
-export interface IEquationTaskData {
+export interface ITaskData {
     id: string | null;
-    equation: string;
+    expression: Expression;
     methodId: string | null;
     methodType: string | null;
     params: {
@@ -41,3 +41,25 @@ export interface ITaskNavItem {
     title: string;
     type: string;
 }
+
+export interface IResult {
+    interData: IInterData;
+    answer: number | number[];
+}
+
+export interface IInterData {
+    titles: string[];
+    values: (string | number)[][];
+}
+
+interface ISLAEItem {
+    id: string;
+    value: string;
+}
+
+export type Expression = string | string[];
+
+// export enum ETypesOfEquation {
+//     equation = 'equation',
+//     systemOfEquation = 'systemOfEquation'
+// }

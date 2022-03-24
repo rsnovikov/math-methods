@@ -1,4 +1,5 @@
-import {ETypesOfEquation, IParams, ITypeOfTask} from "../calculatorTypes";
+import {IParams, ITypeOfTask} from "../calculatorTypes";
+import {EEquationMethods, ESLAEMethods, ETypesOfEquation} from "../calcEnums";
 
 export const equationParams: IParams = {
     accuracy: {
@@ -27,34 +28,40 @@ export const typesOfTasks: ITypeOfTask[] = [
             {
                 id: '1',
                 title: 'Метод половинного деления',
-                type: 'halfDiv',
+                type: EEquationMethods.halfDiv,
                 params: equationParams
             },
             {
                 id: '2',
                 title: 'Метод простых итераций',
-                type: 'simpleIter',
+                type: EEquationMethods.simpleIter,
+                params: equationParams
+            },
+            {
+                id: "3",
+                title: "Метод Ньютона",
+                type: EEquationMethods.newton,
                 params: equationParams
             }
         ]
     },
-    // {
-    //     id: '2',
-    //     title: 'Решение системы уравнений',
-    //     type: ETypesOfEquation.systemOfEquation,
-    //     methods: [
-    //         {
-    //             id: '1',
-    //             title: 'Метод Гауса',
-    //             type: 'halfDiv',
-    //             params: equationParams
-    //         },
-    //         {
-    //             id: '2',
-    //             title: 'Метод простых итераций',
-    //             type: 'simpleIter',
-    //             params: equationParams
-    //         }
-    //     ]
-    // }
+    {
+        id: '2',
+        title: 'Решение системы уравнений',
+        type: ETypesOfEquation.SLAE,
+        methods: [
+            {
+                id: '1',
+                title: 'Метод простых итераций',
+                type: ESLAEMethods.simpleIter,
+                params: {
+                    accuracy: {
+                        label: "Точность",
+                        name: "accuracy",
+                        id: "1"
+                    }
+                }
+            }
+        ]
+    }
 ]

@@ -31,14 +31,19 @@ export interface ITaskNavItem {
     type: string;
 }
 
-export enum ETypesOfEquation {
-    equation = 'equation',
-    systemOfEquation = 'systemOfEquation'
-}
-
 export interface IEquationMethodProps {
     equation: string;
     a: number;
     b: number;
     accuracy: number;
+}
+
+export interface IResult {
+    interData: IInterData;
+    answer: number | number[];
+}
+
+export interface IInterData {
+    titles: string[];
+    values: (string | number)[][];
 }

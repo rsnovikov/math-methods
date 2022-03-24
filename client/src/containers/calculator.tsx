@@ -1,34 +1,36 @@
 import React, {useEffect, useState} from "react";
-import CalculatorSelect from "../components/calculatorSelect";
-import CalculatorParams from "../components/calculatorParams";
-import {ITypeOfTask, IEquationTaskData, IMethod} from "../types/types";
-import CalculatorInput from "../components/UI/calculatorInput";
+import CalcSelect from "../components/calcSelect";
+import CalcParams from "../components/calcParams";
+import {ITypeOfTask, ITaskData, IMethod, IResult, Expression} from "../types/types";
 import {requestToServer} from "../axios/requests";
 import {useParams} from "react-router-dom";
-import CalculatorResult from "../components/calculatorResult";
+import CalcResult from "../components/calcResult";
 import LoadingAndError from "../hoc/loadingAndError";
-import CalculatorGraph from "../components/calculatorGraph";
+import CalcGraph from "../components/calcGraph";
+import CalcExpression from "../components/calcExpression";
 
 const Calculator: React.FC = () => {
     const {type} = useParams();
 
     const [typeOfTask, setTypeOfTask] = useState<ITypeOfTask | {}>({});
 
-    const [currentEquation, setCurrentEquation] = useState<string>('');
+    const [currentExpression, setCurrentExpression] = useState<Expression>("");
     const [currentMethod, setCurrentMethod] = useState<IMethod | {}>({});
     const [currentParams, setCurrentParams] = useState<{ [key: string]: string }>({});
 
     const [isTaskLoading, setTaskIsLoading] = useState<boolean>(false);
     const [taskError, setTaskError] = useState<string>('');
 
-    const [result, setResult] = useState<string>('');
+    const [result, setResult] = useState<{} | IResult>({});
+
     const [isResultLoading, setIsResultLoading] = useState<boolean>(false);
     const [resultError, setResultError] = useState<string>('');
 
     useEffect(() => {
-        requestToServer(setTypeOfTask, setTaskIsLoading, setTaskError, type || '')
+        requestToServer(setTypeOfTask, setTaskIsLoading, setTaskError, `/${type}` || '')
             .then((data: ITypeOfTask) => {
                 setCurrentMethod(data.methods[0]);
+                console.log(data)
             });
     }, []);
 
@@ -38,46 +40,47 @@ const Calculator: React.FC = () => {
 
     const formSubmitHandler = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log(currentParams)
-        const taskData: IEquationTaskData = {
+        const taskData: ITaskData = {
             id: (typeOfTask as ITypeOfTask).id,
-            equation: currentEquation,
+            expression: currentExpression,
             methodType: (currentMethod as IMethod).type,
             methodId: (currentMethod as IMethod).id,
             type: type || '',
             params: currentParams
         }
-        requestToServer(setResult, setIsResultLoading, setResultError, '', 'post', taskData);
+        console.log(type);
+        requestToServer(setResult, setIsResultLoading, setResultError, `/${type}`, 'post', taskData);
     }
 
     const paramChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, key: string) => {
         setCurrentParams({...currentParams, [key]: event.target.value});
     }
 
+
     return (
         <LoadingAndError isLoading={isTaskLoading} errorMessage={taskError}>
             <div className="container">
-                <h1>Калькулятор</h1>
+                <h1>{(typeOfTask as ITypeOfTask) .title}</h1>
                 <form onSubmit={formSubmitHandler} noValidate={true}>
                     <fieldset>
-                        <CalculatorInput
-                            type="text"
-                            id="equation"
-                            className="form-control"
-                            placeholder="f(x)"
-                            value={currentEquation}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCurrentEquation(event.target.value)}
+                        <CalcExpression
+                            type={type || ""}
+                            expression={currentExpression}
+                            setExpression={setCurrentExpression}
                         />
-                        <CalculatorGraph/>
-                        <CalculatorSelect changeHandler={selectChangeHandler}
-                                          methods={(typeOfTask as ITypeOfTask).methods}/>
+                        <CalcGraph expression={currentExpression}/>
+                        <CalcSelect changeHandler={selectChangeHandler}
+                                    methods={(typeOfTask as ITypeOfTask).methods}/>
                         <hr/>
-                        <CalculatorParams paramsData={(currentMethod as IMethod).params || {}}
-                                          paramChangeHandler={paramChangeHandler}/>
+                        <CalcParams paramsData={(currentMethod as IMethod).params || {}}
+                                    paramChangeHandler={paramChangeHandler}/>
                         <button type="submit" className="btn btn-dark">Решить</button>
                     </fieldset>
                 </form>
-                <CalculatorResult isLoading={isResultLoading} errorMessage={resultError} result={result}/>
+                {
+                    Object.keys(result).length !== 0
+                    && <CalcResult isLoading={isResultLoading} errorMessage={resultError} result={result}/>
+                }
             </div>
         </LoadingAndError>
     );

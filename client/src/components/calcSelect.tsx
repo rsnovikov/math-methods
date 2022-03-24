@@ -1,12 +1,12 @@
 import React from "react";
 import {IMethod} from "../types/types";
 
-interface ICalculatorSelectProps {
+interface ICalcSelectProps {
     changeHandler: React.ChangeEventHandler<HTMLSelectElement>;
     methods: IMethod[];
 }
 
-const CalculatorSelect: React.FC<ICalculatorSelectProps> = ({changeHandler, methods}) => {
+const CalcSelect: React.FC<ICalcSelectProps> = ({changeHandler, methods}) => {
     return (
         <div className="mb-3">
             <label htmlFor="method" className="form-label">Выберите метод решения</label>
@@ -26,4 +26,4 @@ const CalculatorSelect: React.FC<ICalculatorSelectProps> = ({changeHandler, meth
     );
 }
 
-export default CalculatorSelect;
+export default CalcSelect;
