@@ -1,9 +1,9 @@
 import {evaluate} from 'mathjs';
 import {IEquationMethodProps, IResult, IInterData} from "../calculatorTypes";
-import {toFix} from "./util";
+import {split,toFix} from "./util";
 
 const equationHalfDiv = ({equation, a, b, accuracy}: IEquationMethodProps): IResult => {
-    console.log(equation)
+    if (split(equation,a,b) === undefined) throw new Error('В заданном промежутке нет корней');
     const values: number[][] = [];
     let c: number;
     while ((b - a) / 2 > accuracy) {
