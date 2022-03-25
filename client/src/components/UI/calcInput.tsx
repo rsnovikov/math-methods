@@ -12,13 +12,13 @@ interface ICalcInputProps {
 
 const CalcInput: React.FC<ICalcInputProps> = ({label, ...props}) => {
     return (
-        <div className="mb-3">
+        <span style={{flex: "1 1 auto"}}>
             <label htmlFor="equation" className="form-label">{label}</label>
             <input
                 className="form-control"
                 {...props}
             />
-        </div>
+        </span>
     );
 }
 

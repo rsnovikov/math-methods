@@ -3,6 +3,8 @@ import {IResult} from "../calculatorTypes";
 
 const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
     const matrix: number[][] = parseStringArrToMatrix(SLAE);
+    console.log(matrix);
+    return;
     for (let i = 0; i < matrix.length; i++) {
         let buffer = matrix[i][i];
         for (let j = 0; j < matrix[i].length; j++) {
@@ -23,10 +25,12 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
     }
     let xPrev: number[] = [];
     let xNow: number[] = [];
+
     for (let i = 0; i < matrix.length; i++) {
         xPrev[i] = 0;
         xNow[i] = 0;
     }
+    let count = 0;
     while (true) {
         for (let i = 0; i < xPrev.length; i++) {
             for (let j = 0; j < matrix[i].length - 1; j++) {
@@ -36,6 +40,7 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
             }
             xNow[i] += matrix[i][matrix[i].length - 1];
         }
+        console.log(xNow);
         if (epsilonCheck(xNow, xPrev, ((1 - max) / max) * epsilon)) {
             const result: IResult = {
                 interData: {

@@ -8,14 +8,18 @@ interface ICalcInputEquation {
 }
 
 const CalcInputEquation: FC<ICalcInputEquation> = ({equation, setEquation}: ICalcInputEquation) => {
-    return <CalcInput
-        type="text"
-        id="equation"
-        className="form-control"
-        placeholder="f(x)"
-        value={equation}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEquation(event.target.value)}
-    />
+    return (
+        <div className="mb-3">
+            <CalcInput
+                type="text"
+                id="equation"
+                className="form-control"
+                placeholder="f(x)"
+                value={equation}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEquation(event.target.value)}
+            />
+        </div>
+    )
 }
 
 export default CalcInputEquation;
