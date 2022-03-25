@@ -8,6 +8,7 @@ import CalcResult from "../components/calcResult";
 import LoadingAndError from "../hoc/loadingAndError";
 import CalcGraph from "../components/calcGraph";
 import CalcExpression from "../components/calcExpression";
+import {ETypesOfEquation} from "../enums/enums";
 
 const Calculator: React.FC = () => {
     const {type} = useParams();
@@ -60,7 +61,7 @@ const Calculator: React.FC = () => {
     return (
         <LoadingAndError isLoading={isTaskLoading} errorMessage={taskError}>
             <div className="container">
-                <h1>{(typeOfTask as ITypeOfTask) .title}</h1>
+                <h1>{(typeOfTask as ITypeOfTask).title}</h1>
                 <form onSubmit={formSubmitHandler} noValidate={true}>
                     <fieldset>
                         <CalcExpression
@@ -68,7 +69,10 @@ const Calculator: React.FC = () => {
                             expression={currentExpression}
                             setExpression={setCurrentExpression}
                         />
-                        <CalcGraph expression={currentExpression}/>
+                        {
+                            type === ETypesOfEquation.equation
+                            && <CalcGraph expression={currentExpression}/>
+                        }
                         <CalcSelect changeHandler={selectChangeHandler}
                                     methods={(typeOfTask as ITypeOfTask).methods}/>
                         <hr/>

@@ -43,6 +43,7 @@ export const parseStringArrToMatrix = (expression) => {
                 el = getEl(splittedEquation, i, 1);
             }
             maxes.push(+splittedEquation[i + 1][0]);
+            console.log(el);
             row[+splittedEquation[i + 1][0] - 1] = +el;
         }
         const max = Math.max(...maxes);

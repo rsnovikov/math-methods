@@ -17,38 +17,40 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
         const prevSLAE = [...SLAE];
         prevSLAE[index] = event.target.value;
         setSLAE(prevSLAE);
-        console.log(SLAE)
     }
     const clickPlusHandle = () => {
-        setSLAE([...SLAE, ""])
+        setSLAE([...SLAE, ""]);
     }
     const clickMinusHandle = () => {
-        console.log(SLAE.slice(0, -1))
-        setSLAE(SLAE.slice(0, -1));
+        if (SLAE.length > 2) setSLAE(SLAE.slice(0, -1));
     }
-    return <>
-        {
-            Array.isArray(SLAE) && SLAE.map((value, index) => {
-                return (
-                    <div>
-                        <CalcInput
-                            type="text"
-                            id="equation"
-                            placeholder="f(x)"
-                            value={SLAE[index]}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeInputHandle(event, index)}
-                        />
-                        {index === SLAE.length - 1 && <>
-                            <button className="btn" type="button" onClick={clickPlusHandle}>+</button>
-                            <button className="btn" type="button" onClick={clickMinusHandle}>-</button>
-                        </>
-                        }
+    return (
+        <>
+            <span>
+                 <button className="btn btn-dark m-1" type="button" onClick={clickPlusHandle}>+1 уравнение</button>
+                 <button className="btn btn-dark" type="button" onClick={clickMinusHandle}>-1 уравнение</button>
+            </span>
+            <div className="mb-3">
+                {
+                    Array.isArray(SLAE) && SLAE.map((value, index) => {
+                        return (
+                            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                                <CalcInput
+                                    type="text"
+                                    id="equation"
+                                    placeholder="f(x)"
+                                    label="Уравнение"
+                                    value={SLAE[index]}
+                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeInputHandle(event, index)}
+                                />
+                            </div>
+                        )
+                    })
+                }
+            </div>
 
-                    </div>
-                )
-            })
-        }
-    </>
+        </>
+    )
 }
 
 export default CalcInputSLAE;
