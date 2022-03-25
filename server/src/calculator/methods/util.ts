@@ -11,10 +11,11 @@ export const split = (func: string, a: number, b: number) => {
         }
         xPrev = a;
     }
+    return;
 }
 
 
-export const toFix = (number: number, accuracy: number = 3): number => {
+export const toFix = (number: number, accuracy: number = 4): number => {
     return +number.toFixed(accuracy);
 }
 
@@ -22,8 +23,7 @@ const getEl = (splittedEquation, index, index2) => {
     const num = splittedEquation[index].slice(index2);
     return (num === '-'
         || num === '+'
-        || num === ''
-    )
+        || num === '')
         ? `${num}1`
         : num;
 }

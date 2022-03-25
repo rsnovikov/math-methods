@@ -1,7 +1,7 @@
 export class PostTaskDto {
     id: string;
     type: string;
-    expression: any;
+    expression;
     methodId: string;
     methodType: string;
     params: {
