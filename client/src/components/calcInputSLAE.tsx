@@ -34,7 +34,7 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
                 {
                     Array.isArray(SLAE) && SLAE.map((value, index) => {
                         return (
-                            <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <div key={index+Date.now()}>
                                 <CalcInput
                                     type="text"
                                     id="equation"
@@ -43,6 +43,7 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
                                     value={SLAE[index]}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeInputHandle(event, index)}
                                 />
+                                = 0
                             </div>
                         )
                     })

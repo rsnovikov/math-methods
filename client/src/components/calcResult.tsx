@@ -24,10 +24,10 @@ const CalcResult: FC<ICalcResult> = ({isLoading, errorMessage, result}) => {
                     </thead>
                     <tbody>
                     {(result as IResult).interData?.values?.map((value, index) => (
-                        <tr>
+                        <tr key={JSON.stringify(value) + index}>
                             <th scope="row">{index + 1}</th>
-                            {value.map(valueItem => (
-                                <td>{valueItem}</td>
+                            {value.map((valueItem, index) => (
+                                <td key={String(valueItem) + index}>{valueItem}</td>
                             ))}
                         </tr>
                     ))}

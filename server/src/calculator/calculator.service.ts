@@ -1,12 +1,13 @@
 import {Injectable} from "@nestjs/common";
-import equationHalfDiv from "./methods/equationHalfDiv";
 import {PostTaskEquationDto, PostTaskSLAEDto} from "./dto/post-task.dto";
 import {IEquationMethodProps, IResult} from "./calculatorTypes";
 import {typesOfTasks} from "./data/data";
-import SLAESimpleIter from "./methods/SLAESimpleIter";
 import {EEquationMethods, ESLAEMethods} from "./calcEnums";
+
 import equationSimpleIter from "./methods/equationSimpleIter";
 import equationNewton from "./methods/equationNewton";
+import SLAESimpleIter from "./methods/SLAESimpleIter";
+import equationHalfDiv from "./methods/equationHalfDiv";
 
 
 @Injectable()
@@ -16,7 +17,6 @@ export class CalculatorService {
     }
 
     postEquationAnswer(postTaskEquationDto: PostTaskEquationDto): IResult {
-        console.log(postTaskEquationDto.methodType)
         const {methodType, expression, params} = postTaskEquationDto;
         const equationProps: IEquationMethodProps = {
             equation: expression,
@@ -28,15 +28,14 @@ export class CalculatorService {
             case EEquationMethods.halfDiv:
                 return equationHalfDiv(equationProps);
             case EEquationMethods.simpleIter:
-            return equationSimpleIter(equationProps);
+                return equationSimpleIter(equationProps);
             case EEquationMethods.newton:
-            return equationNewton(equationProps);
+                return equationNewton(equationProps);
         }
     }
 
-    postSLAEAnswer(postTaskSLAEDto: PostTaskSLAEDto):IResult {
+    postSLAEAnswer(postTaskSLAEDto: PostTaskSLAEDto): IResult {
         const {expression, methodType, params} = postTaskSLAEDto;
-        console.log(postTaskSLAEDto);
         switch (methodType) {
             case ESLAEMethods.simpleIter:
                 return SLAESimpleIter(expression, +params.accuracy);

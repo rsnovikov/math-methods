@@ -1,6 +1,5 @@
 import {NestFactory} from "@nestjs/core";
 import {AppModule} from "./app.module";
-import SLAESimpleIter from "./calculator/methods/SLAESimpleIter";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);

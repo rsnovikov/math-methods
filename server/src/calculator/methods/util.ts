@@ -21,19 +21,19 @@ export const toFix = (number: number, accuracy: number = 4): number => {
 
 const getEl = (splittedEquation, index, index2) => {
     const num = splittedEquation[index].slice(index2);
-    return (num === '-'
-        || num === '+'
-        || num === '')
+    return (num === "-"
+        || num === "+"
+        || num === "")
         ? `${num}1`
         : num;
 }
 
 export const parseStringArrToMatrix = (expression) => {
     const count = expression.length;
-    const newEquations = [...expression].map(equation => equation.replaceAll(' ', ''));
+    const newEquations = [...expression].map(equation => equation.replaceAll(" ", ""));
     const matrix: number[][] = newEquations.map(equation => {
         const row: number[] = [];
-        const splittedEquation = equation.split('x');
+        const splittedEquation = equation.split("x");
         const maxes: number[] = [];
         for (let i = 0; i < count; i++) {
             let el: string;
@@ -43,7 +43,6 @@ export const parseStringArrToMatrix = (expression) => {
                 el = getEl(splittedEquation, i, 1);
             }
             maxes.push(+splittedEquation[i + 1][0]);
-            console.log(el);
             row[+splittedEquation[i + 1][0] - 1] = +el;
         }
         const max = Math.max(...maxes);

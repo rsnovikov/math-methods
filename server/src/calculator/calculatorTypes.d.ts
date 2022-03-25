@@ -25,12 +25,6 @@ export interface IParam {
     type?: string;
 }
 
-export interface ITaskNavItem {
-    id: string;
-    title: string;
-    type: string;
-}
-
 export interface IEquationMethodProps {
     equation: string;
     a: number;
