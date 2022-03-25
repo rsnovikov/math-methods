@@ -1,30 +1,31 @@
 import {evaluate} from "mathjs";
 
-export const split = (func:string,a:number,b:number) => {
-    const div = (b-a)*5
-    const length=(b-a)/div;
-    let xPrev:number = a;
-    for (let i=0;i<div;i++)
-    {
-        a+=length
-        if (evaluate(func,{x:xPrev})*evaluate(func,{x:a})<0)
-        {
-            return [Math.floor(xPrev),Math.ceil(a)];
+export const split = (func: string, a: number, b: number) => {
+    const div = (b - a) * 5
+    const length = (b - a) / div;
+    let xPrev: number = a;
+    for (let i = 0; i < div; i++) {
+        a += length
+        if (evaluate(func, {x: xPrev}) * evaluate(func, {x: a}) < 0) {
+            return [Math.floor(xPrev), Math.ceil(a)];
         }
-        xPrev=a;
+        xPrev = a;
     }
+    return;
 }
 
 
-export const toFix = (number: number, accuracy: number = 3): number => {
+export const toFix = (number: number, accuracy: number = 4): number => {
     return +number.toFixed(accuracy);
 }
 
 const getEl = (splittedEquation, index, index2) => {
-    return (splittedEquation[index].slice(index2) === '-'
-        || splittedEquation[index].slice(index2) === '+')
-        ? `${splittedEquation[index].slice(index2)}1`
-        : splittedEquation[index].slice(index2);
+    const num = splittedEquation[index].slice(index2);
+    return (num === '-'
+        || num === '+'
+        || num === '')
+        ? `${num}1`
+        : num;
 }
 
 export const parseStringArrToMatrix = (expression) => {

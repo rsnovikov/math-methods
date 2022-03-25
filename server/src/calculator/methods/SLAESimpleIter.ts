@@ -1,4 +1,4 @@
-import {parseStringArrToMatrix} from "./util";
+import {parseStringArrToMatrix,toFix} from "./util";
 import {IResult} from "../calculatorTypes";
 
 const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
@@ -9,7 +9,13 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
             matrix[i][j] /= buffer;
         }
     }
-    let max = 0, sum = 0;
+    let max = 0, sum = 0,
+        titles:string[]=[],
+        values:number[][]=[],
+        xBuff:number[] = [];
+    for (let i=0;i<matrix[0].length-1;i++){
+        titles[i]=`x${i+1}`;
+    }
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length - 1; j++) {
             if (i !== j) {
@@ -21,6 +27,9 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
         }
         sum = 0;
     }
+
+    if (max > 1) throw new Error ('Система не сходится')
+
     let xPrev: number[] = [];
     let xNow: number[] = [];
     for (let i = 0; i < matrix.length; i++) {
@@ -32,15 +41,18 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
             for (let j = 0; j < matrix[i].length - 1; j++) {
                 if (i !== j) {
                     xNow[i] += -(xPrev[j] * matrix[i][j]);
+
                 }
             }
-            xNow[i] += matrix[i][matrix[i].length - 1];
+            xNow[i] -= matrix[i][matrix[i].length - 1];
+            xBuff[i]=toFix(xNow[i]);
         }
+        values.push(xBuff);
         if (epsilonCheck(xNow, xPrev, ((1 - max) / max) * epsilon)) {
             const result: IResult = {
                 interData: {
-                    titles: [],
-                    values: []
+                    titles,
+                    values
                 },
                 answer: xNow
             };

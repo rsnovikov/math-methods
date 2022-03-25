@@ -34,7 +34,7 @@ export class CalculatorService {
         }
     }
 
-    postSLAEAnswer(postTaskSLAEDto: PostTaskSLAEDto) {
+    postSLAEAnswer(postTaskSLAEDto: PostTaskSLAEDto):IResult {
         const {expression, methodType, params} = postTaskSLAEDto;
         console.log(postTaskSLAEDto);
         switch (methodType) {
