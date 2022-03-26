@@ -1,5 +1,4 @@
-import {NavLink, NavLinkProps} from "react-router-dom";
-import React from "react";
+import React, {NavLink, NavLinkProps} from "react-router-dom";
 
 const NavItem = ({children, className, ...props}: NavLinkProps) => {
     return (

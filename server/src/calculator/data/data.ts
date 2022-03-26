@@ -3,37 +3,37 @@ import {EEquationMethods, ESLAEMethods, ETypesOfEquation} from "../calcEnums";
 
 export const equationParams: IParams = {
     accuracy: {
-        id: '1',
-        name: 'accuracy',
-        label: 'Точность'
+        id: "1",
+        name: "accuracy",
+        label: "Точность"
     },
     a: {
-        id: '2',
-        name: 'a',
-        label: 'Левая граница a'
+        id: "2",
+        name: "a",
+        label: "Левая граница a"
     },
     b: {
-        id: '3',
-        name: 'b',
-        label: 'Правая граница b'
+        id: "3",
+        name: "b",
+        label: "Правая граница b"
     }
 };
 
 export const typesOfTasks: ITypeOfTask[] = [
     {
-        id: '1',
-        title: 'Решение уравнения',
+        id: "1",
+        title: "Решение уравнения",
         type: ETypesOfEquation.equation,
         methods: [
             {
-                id: '1',
-                title: 'Метод половинного деления',
+                id: "1",
+                title: "Метод половинного деления",
                 type: EEquationMethods.halfDiv,
                 params: equationParams
             },
             {
-                id: '2',
-                title: 'Метод простых итераций',
+                id: "2",
+                title: "Метод простых итераций",
                 type: EEquationMethods.simpleIter,
                 params: equationParams
             },
@@ -46,13 +46,13 @@ export const typesOfTasks: ITypeOfTask[] = [
         ]
     },
     {
-        id: '2',
-        title: 'Решение системы уравнений',
+        id: "2",
+        title: "Решение системы уравнений",
         type: ETypesOfEquation.SLAE,
         methods: [
             {
-                id: '1',
-                title: 'Метод простых итераций',
+                id: "1",
+                title: "Метод простых итераций",
                 type: ESLAEMethods.simpleIter,
                 params: {
                     accuracy: {

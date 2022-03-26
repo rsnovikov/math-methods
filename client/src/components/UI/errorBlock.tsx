@@ -1,6 +1,6 @@
-import {FC} from "react";
+import React, {FC} from "react";
 
-const ErrorBlock : FC= () => {
+const ErrorBlock: FC = () => {
     return (
         <span>ошибка</span>
     )

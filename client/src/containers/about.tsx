@@ -1,6 +1,6 @@
-import React from "react";
+import React, {FC} from "react";
 
-const About: React.FC = () => {
+const About: FC = () => {
     return (
         <div className="container">
             <h1>О приложении</h1>

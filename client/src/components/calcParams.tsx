@@ -1,12 +1,13 @@
-import React from "react";
+import React, {ChangeEvent, FC} from "react";
 import {IParams} from "../types/types";
+
 
 interface ICalcParams {
     paramsData: IParams;
-    paramChangeHandler: (event: React.ChangeEvent<HTMLInputElement>, id: string) => void;
+    paramChangeHandler: (event: ChangeEvent<HTMLInputElement>, id: string) => void;
 }
 
-const CalcParams: React.FC<ICalcParams> = ({paramsData, paramChangeHandler}) => {
+const CalcParams: FC<ICalcParams> = ({paramsData, paramChangeHandler}) => {
     return (
         <>
             {

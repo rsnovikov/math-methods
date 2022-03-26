@@ -52,14 +52,4 @@ export interface IInterData {
     values: (string | number)[][];
 }
 
-interface ISLAEItem {
-    id: string;
-    value: string;
-}
-
 export type Expression = string | string[];
-
-// export enum ETypesOfEquation {
-//     equation = 'equation',
-//     systemOfEquation = 'systemOfEquation'
-// }

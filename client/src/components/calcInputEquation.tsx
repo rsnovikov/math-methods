@@ -1,6 +1,7 @@
-import React, {Dispatch, FC, SetStateAction} from "react";
-import CalcInput from "./UI/calcInput";
+import React, {ChangeEvent, Dispatch, FC, SetStateAction} from "react";
 import {Expression} from "../types/types";
+import CalcInput from "./UI/calcInput";
+
 
 interface ICalcInputEquation {
     equation: string;
@@ -16,10 +17,10 @@ const CalcInputEquation: FC<ICalcInputEquation> = ({equation, setEquation}: ICal
                 className="form-control"
                 placeholder="f(x)"
                 value={equation}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEquation(event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => setEquation(event.target.value)}
             />
         </div>
-    )
+    );
 }
 
 export default CalcInputEquation;

@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from "react";
-import {evaluate} from 'mathjs';
+import {evaluate} from "mathjs";
 import {Expression} from "../types/types";
 
 interface ICalcGraph {
@@ -20,7 +20,7 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
     const scaleY = (dpiHeight - padding * 2) / (maxValueY * 2);
 
     useEffect(() => {
-        const ctx = canvasRef.current?.getContext('2d');
+        const ctx = canvasRef.current?.getContext("2d");
         setCtx(ctx);
         init(ctx);
     }, []);
@@ -30,7 +30,8 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1.5;
-        ctx.font = 'normal 30px Helvetica, sans-serif';
+        ctx.fillStyle = "black";
+        ctx.font = "normal 30px Helvetica, sans-serif";
         // line x
         ctx.moveTo(padding, dpiHeight / 2);
         ctx.lineTo(dpiWidth - padding + 10, dpiHeight / 2);
@@ -51,7 +52,7 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.font = 'normal 20px Helvetica, sans-serif';
+        ctx.font = "normal 20px Helvetica, sans-serif";
         ctx.strokeStyle = "grey"
         ctx.lineWidth = 0.5;
         for (let i = -maxValueX; i <= maxValueX; i += 1) {
@@ -88,7 +89,8 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
         }
 
         ctx.beginPath();
-        ctx.strokeStyle = 'blue';
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 1;
         ctx.moveTo(dpiWidth / 2 + prev.x * scaleX, dpiHeight / 2 - prev.y * scaleY);
         const points = [];
         for (let x = -maxValueX; x <= maxValueX; x += 0.01) {
@@ -104,6 +106,13 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
         }
         ctx.stroke();
         ctx.closePath();
+        points.forEach(x => {
+            ctx.beginPath()
+            ctx.arc(dpiWidth / 2 + x * scaleX, dpiHeight / 2, 5, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fillText(`(${+x.toFixed(2)};0)`, dpiWidth / 2 + x * scaleX + 7, dpiHeight / 2 - 7);
+            ctx.fill()
+        })
         console.log(points);
     }
 
@@ -121,11 +130,11 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
     }
 
     return (
-        <div style={{display: "flex", justifyContent: "center", marginBottom: "15px"}}>
+        <div>
             <div>
                 <canvas
                     style={{
-                        border: '1px solid black',
+                        border: "1px solid black",
                         height: `${height}px`,
                         width: `${width}px`,
                         marginBottom: "15px",

@@ -1,15 +1,18 @@
-import React from "react";
+import React, {ChangeEventHandler, FC} from "react";
 import {IMethod} from "../types/types";
 
 interface ICalcSelectProps {
-    changeHandler: React.ChangeEventHandler<HTMLSelectElement>;
+    changeHandler: ChangeEventHandler<HTMLSelectElement>;
     methods: IMethod[];
 }
 
-const CalcSelect: React.FC<ICalcSelectProps> = ({changeHandler, methods}) => {
+const CalcSelect: FC<ICalcSelectProps> = ({changeHandler, methods}) => {
     return (
         <div className="mb-3">
-            <label htmlFor="method" className="form-label">Выберите метод решения</label>
+            <label
+                htmlFor="method"
+                className="form-label"
+            >Выберите метод решения</label>
             <select
                 id="method"
                 onChange={changeHandler}
@@ -17,10 +20,12 @@ const CalcSelect: React.FC<ICalcSelectProps> = ({changeHandler, methods}) => {
             >
                 {
                     methods?.map((method) => {
-                        return <option value={method.id} key={method.id}>{method.title}</option>
+                        return <option
+                            value={method.id}
+                            key={method.id}
+                        >{method.title}</option>
                     })
                 }
-
             </select>
         </div>
     );

@@ -1,8 +1,7 @@
-import React from "react";
-
+import React, {FC} from "react";
 import NavItem from "./navItem";
 
-const PagesNavList: React.FC = () => {
+const PagesNavList: FC = () => {
     return (
         <ul className="navbar-nav">
             <NavItem to="/">Калькулятор</NavItem>

@@ -1,9 +1,9 @@
-import {Get, Controller, Param, Post, Body} from '@nestjs/common';
+import {Get, Controller, Param, Post, Body} from "@nestjs/common";
 import {CalculatorService} from "./calculator.service";
-import {PostTaskDto, PostTaskEquationDto, PostTaskSLAEDto} from "./dto/post-task.dto";
+import {PostTaskEquationDto, PostTaskSLAEDto} from "./dto/post-task.dto";
 import {ETypesOfEquation} from "./calcEnums";
 
-@Controller('api/calculator')
+@Controller("api/calculator")
 export class CalculatorController {
     constructor(private readonly CalculatorService: CalculatorService) {
     }
@@ -13,9 +13,9 @@ export class CalculatorController {
         return this.CalculatorService.getTaskNav();
     }
 
-    @Get('/:type')
+    @Get("/:type")
     get(@Param() {type}) {
-        return this.CalculatorService.getTypeOfEquation(type)
+        return this.CalculatorService.getTypeOfEquation(type);
     }
 
     @Post(`/${ETypesOfEquation.equation}`)
