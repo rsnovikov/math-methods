@@ -14,7 +14,6 @@ export const split = (func: string, a: number, b: number) => {
     return;
 }
 
-
 export const toFix = (number: number, accuracy: number = 4): number => {
     return +number.toFixed(accuracy);
 }
@@ -50,5 +49,6 @@ export const parseStringArrToMatrix = (expression) => {
         row[max] = +lastEl;
         return row;
     });
+    console.log(matrix);
     return matrix;
 }

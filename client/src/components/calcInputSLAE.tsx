@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
+import React, {ChangeEvent, Dispatch, FC, SetStateAction, useEffect} from "react";
 import CalcInput from "./UI/calcInput";
 import {Expression} from "../types/types";
 
@@ -13,7 +13,7 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
         setSLAE(["", ""]);
     }, [])
 
-    const changeInputHandle = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const changeInputHandle = (event: ChangeEvent<HTMLInputElement>, index: number) => {
         const prevSLAE = [...SLAE];
         prevSLAE[index] = event.target.value;
         setSLAE(prevSLAE);
@@ -34,7 +34,7 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
                 {
                     Array.isArray(SLAE) && SLAE.map((value, index) => {
                         return (
-                            <div key={index+Date.now()}>
+                            <div key={index}>
                                 <CalcInput
                                     type="text"
                                     id="equation"
@@ -49,9 +49,8 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
                     })
                 }
             </div>
-
         </>
-    )
+    );
 }
 
 export default CalcInputSLAE;

@@ -8,12 +8,17 @@ interface ICalcResult {
     result: {} | IResult;
 }
 
-const CalcResult: FC<ICalcResult> = ({isLoading, errorMessage, result}) => {
-    console.log(result)
+const CalcResult: FC<ICalcResult> = (
+    {
+        isLoading,
+        errorMessage,
+        result
+    }
+) => {
     return (
         <LoadingAndError isLoading={isLoading} errorMessage={errorMessage}>
             <div className="mt-3 mb-3">
-                {(result as IResult).interData &&  <table className="table">
+                {(result as IResult).interData && <table className="table">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -34,7 +39,7 @@ const CalcResult: FC<ICalcResult> = ({isLoading, errorMessage, result}) => {
                     </tbody>
                 </table>}
 
-                <strong className="m-1">{JSON.stringify((result as IResult).answer)}</strong>
+                <strong className="m-1">Итоговый ответ: {JSON.stringify((result as IResult).answer)}</strong>
             </div>
         </LoadingAndError>
     );

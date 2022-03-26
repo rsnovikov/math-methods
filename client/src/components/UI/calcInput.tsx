@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 
 interface ICalcInputProps {
     label?: string;
@@ -10,9 +10,9 @@ interface ICalcInputProps {
     className?: string;
 }
 
-const CalcInput: React.FC<ICalcInputProps> = ({label, ...props}) => {
+const CalcInput: FC<ICalcInputProps> = ({label, ...props}) => {
     return (
-        <span style={{flex: "1 1 auto"}}>
+        <span>
             <label htmlFor="equation" className="form-label">{label}</label>
             <input
                 className="form-control"

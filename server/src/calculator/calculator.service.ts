@@ -3,7 +3,6 @@ import {PostTaskEquationDto, PostTaskSLAEDto} from "./dto/post-task.dto";
 import {IEquationMethodProps, IResult} from "./calculatorTypes";
 import {typesOfTasks} from "./data/data";
 import {EEquationMethods, ESLAEMethods} from "./calcEnums";
-
 import equationSimpleIter from "./methods/equationSimpleIter";
 import equationNewton from "./methods/equationNewton";
 import SLAESimpleIter from "./methods/SLAESimpleIter";

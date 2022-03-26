@@ -3,7 +3,7 @@ import {IEquationMethodProps, IResult} from "../calculatorTypes";
 import {split, toFix} from "./util";
 
 const simpleIter = ({equation, a, b, accuracy}: IEquationMethodProps): IResult => {
-    const der: string = derivative(equation, 'x').toString();
+    const der: string = derivative(equation, "x").toString();
     const numbers: number[] = [];
     let lambda: number,
         values: number[][] = [],
