@@ -6,6 +6,9 @@ export const split = (func: string, a: number, b: number) => {
     let xPrev: number = a;
     for (let i = 0; i < div; i++) {
         a += length
+        if (evaluate(func, {x: a}) === 0){
+            return [Math.round(a)-0.5,Math.round(a)+0.5];
+        }
         if (evaluate(func, {x: xPrev}) * evaluate(func, {x: a}) < 0) {
             return [Math.floor(xPrev), Math.ceil(a)];
         }
@@ -14,7 +17,7 @@ export const split = (func: string, a: number, b: number) => {
     return;
 }
 
-export const toFix = (number: number, accuracy: number = 4): number => {
+export const toFix = (number: number, accuracy: number = 6): number => {
     return +number.toFixed(accuracy);
 }
 
@@ -49,6 +52,42 @@ export const parseStringArrToMatrix = (expression) => {
         row[max] = +lastEl;
         return row;
     });
-    console.log(matrix);
+   // console.log(matrix);
     return matrix;
+}
+
+export const matrixDiviation = (mat: number[][]): number[][] => {
+    const answerMatrix: number[][] = [];
+    mat.forEach((item, index) => {
+        answerMatrix.push(item.map(current => {
+            return current / mat[index][index];
+        }))
+    })
+    return answerMatrix;
+}
+
+export const epsilonCheck = (xNew: number[], xOld: number[], e: number) => {
+    let flag: boolean = false;
+    for (let i = 0; i < xNew.length; i++) {
+        if (Math.abs(xOld[i] - xNew[i]) < e) {
+            flag = true;
+        } else {
+            flag = false;
+            break;
+        }
+    }
+    return flag;
+}
+
+export const aFind = (mx: number[][]) => {
+    let maxArr: number[] = [];
+    mx.forEach((item, index) => {
+        maxArr.push(item.reduce((preVal, currentVal, bottIndex) => {
+            if (bottIndex !== index && bottIndex !== item.length - 1) {
+                return preVal + Math.abs(currentVal)
+            } else
+                return preVal
+        }, 0))
+    })
+    return Math.max(...maxArr);
 }

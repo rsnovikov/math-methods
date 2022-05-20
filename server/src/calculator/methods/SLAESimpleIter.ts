@@ -1,33 +1,22 @@
 import {parseStringArrToMatrix, toFix} from "./util";
 import {IResult} from "../calculatorTypes";
+import {find, max} from "rxjs";
+import {matrixDiviation} from "./util";
+import {epsilonCheck} from "./util";
+import {aFind} from "./util";
 
 const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
-    const matrix: number[][] = parseStringArrToMatrix(SLAE);
-    for (let i = 0; i < matrix.length; i++) {
-        let buffer = matrix[i][i];
-        for (let j = 0; j < matrix[i].length; j++) {
-            matrix[i][j] /= buffer;
-        }
-    }
-    let max = 0, sum = 0,
+    const matrix: number[][] = matrixDiviation(parseStringArrToMatrix(SLAE));
+    let counter = 0;
+    let max = aFind(matrix),
         titles: string[] = [],
         values: number[][] = [],
         xBuff: number[] = [];
     for (let i = 0; i < matrix[0].length - 1; i++) {
         titles[i] = `x${i + 1}`;
     }
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length - 1; j++) {
-            if (i !== j) {
-                sum += Math.abs(matrix[i][j]);
-            }
-        }
-        if (sum > max) {
-            max = sum;
-        }
-        sum = 0;
-    }
 
+    //console.log(max)
     if (max > 1) throw new Error("Система не сходится")
 
     let xPrev: number[] = [];
@@ -49,7 +38,9 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
             xBuff[i] = toFix(xNow[i]);
         }
         values.push(xBuff);
-        if (epsilonCheck(xNow, xPrev, ((1 - max) / max) * epsilon)) {
+        counter++;
+        // console.log(xNow);
+        if (epsilonCheck(xNow, xPrev, epsilon)) {
             const result: IResult = {
                 interData: {
                     titles,
@@ -57,6 +48,7 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
                 },
                 answer: xNow
             };
+            // console.log(counter)
             return result;
         }
         for (let i = 0; i < xNow.length; i++) {
@@ -66,17 +58,10 @@ const SLAESimpleIter = (SLAE: string[], epsilon: number): IResult => {
     }
 }
 
-const epsilonCheck = (arr1: number[], arr2: number[], e: number) => {
-    let flag: boolean = false;
-    for (let i = 0; i < arr1.length; i++) {
-        if (Math.abs(arr1[i] - arr2[i]) < e) {
-            flag = true;
-        } else {
-            flag = false;
-            break;
-        }
-    }
-    return flag;
-}
+
+
+//-3.2x1+2x2-x3+5.4
+//x1+5x2-2x3-5
+//x1+x2-3.5x3+0.5
 
 export default SLAESimpleIter;
