@@ -1,55 +1,55 @@
 export interface ITypeOfTask {
-    id: string;
-    type: string;
-    title: string;
-    methods: IMethod[];
+  id: string;
+  type: string;
+  title: string;
+  methods: IMethod[];
 }
 
 export interface IMethod {
-    id: string;
-    title: string;
-    type: string;
-    params: IParams | {};
+  id: string;
+  title: string;
+  type: string;
+  params: IParams | {};
 }
 
 export interface IParam {
-    id: string;
-    name: string;
-    label: string;
-    value?: string;
-    placeholder?: string;
-    type?: string;
+  id: string;
+  name: string;
+  label: string;
+  value?: string;
+  placeholder?: string;
+  type?: string;
 }
 
 export interface ITaskData {
-    id: string | null;
-    expression: Expression;
-    methodId: string | null;
-    methodType: string | null;
-    params: {
-        [key: string]: string
-    };
-    type: string;
+  id: string | null;
+  expression: Expression;
+  methodId: string | null;
+  methodType: string | null;
+  params: {
+    [key: string]: string;
+  };
+  type: string;
 }
 
 export interface IParams {
-    [key: string]: IParam;
+  [key: string]: IParam;
 }
 
 export interface ITaskNavItem {
-    id: string;
-    title: string;
-    type: string;
+  id: string;
+  title: string;
+  type: string;
 }
 
 export interface IResult {
-    interData: IInterData;
-    answer: number | number[];
+  interData: IInterData;
+  answer: number | number[];
 }
 
 export interface IInterData {
-    titles: string[];
-    values: (string | number)[][];
+  titles: string[];
+  values: (string | number)[][];
 }
 
 export type Expression = string | string[];
