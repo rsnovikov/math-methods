@@ -43,7 +43,6 @@ const CalcInputSLAE: FC<ICalcInputSLAE> = ({setSLAE, SLAE}) => {
                                     value={SLAE[index]}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeInputHandle(event, index)}
                                 />
-                                = 0
                             </div>
                         )
                     })

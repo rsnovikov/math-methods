@@ -14,7 +14,6 @@ const CalcInputEquation: FC<ICalcInputEquation> = ({equation, setEquation}: ICal
             <CalcInput
                 type="text"
                 id="equation"
-                className="form-control"
                 placeholder="f(x)"
                 value={equation}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setEquation(event.target.value)}
