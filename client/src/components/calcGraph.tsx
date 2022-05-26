@@ -92,12 +92,14 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
         ctx.strokeStyle = "blue";
         ctx.lineWidth = 1;
         ctx.moveTo(dpiWidth / 2 + prev.x * scaleX, dpiHeight / 2 - prev.y * scaleY);
-        const points = [];
-        for (let x = -maxValueX; x <= maxValueX; x += 0.01) {
+        const points: number[] = [];
+        for (let x = -maxValueX; x <= maxValueX; x += 0.001) {
             const y = evaluate(equation, {x});
             ctx.lineTo(dpiWidth / 2 + x * scaleX, dpiHeight / 2 - y * scaleY);
-
-            if ((prev.y < 0 && y > 0) || (prev.y > 0 && y < 0)) {
+            if (y < 0.5 && y > -0.5) {
+                console.log(y);
+            }
+            if (prev.y * y < 0 || +y.toFixed(15) === 0) {
                 const pointX = (x + prev.x) / 2
                 points.push(pointX);
             }
@@ -113,7 +115,6 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
             ctx.fillText(`(${+x.toFixed(2)};0)`, dpiWidth / 2 + x * scaleX + 7, dpiHeight / 2 - 7);
             ctx.fill()
         })
-        console.log(points);
     }
 
     const clickHandler = () => {
@@ -131,14 +132,15 @@ const CalcGraph: FC<ICalcGraph> = ({expression}) => {
 
     return (
         <div>
-            <div>
+            <div className="mx-auto mb-3">
                 <canvas
                     style={{
                         border: "1px solid black",
                         height: `${height}px`,
                         width: `${width}px`,
+                        margin: "0 auto",
                         marginBottom: "15px",
-                        display: "block"
+                        display: "block",
                     }}
                     ref={canvasRef}
                     width={dpiWidth}

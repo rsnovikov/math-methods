@@ -12,13 +12,21 @@ interface ICalcInputProps {
 
 const CalcInput: FC<ICalcInputProps> = ({label, ...props}) => {
     return (
-        <span>
+        <div className="mb-2">
             <label htmlFor="equation" className="form-label">{label}</label>
-            <input
-                className="form-control"
-                {...props}
-            />
-        </span>
+            <div className="d-flex justify-content-between align-items-center">
+                <input
+                    className="form-control me-2"
+                    {...props}
+                />
+                <p
+                    className="fw-bold mb-0"
+                    style={{
+                        whiteSpace: "nowrap"
+                    }}
+                >= 0</p>
+            </div>
+        </div>
     );
 }
 
