@@ -7,6 +7,7 @@ import equationSimpleIter from "./methods/equationSimpleIter";
 import equationNewton from "./methods/equationNewton";
 import SLAESimpleIter from "./methods/SLAESimpleIter";
 import equationHalfDiv from "./methods/equationHalfDiv";
+import SLAEZeidel from "./methods/SLAEZeidel";
 
 
 @Injectable()
@@ -38,6 +39,8 @@ export class CalculatorService {
         switch (methodType) {
             case ESLAEMethods.simpleIter:
                 return SLAESimpleIter(expression, +params.accuracy);
+            case ESLAEMethods.zeidel:
+                return SLAEZeidel(expression,+params.accuracy)
         }
     }
 

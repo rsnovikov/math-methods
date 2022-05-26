@@ -61,6 +61,18 @@ export const typesOfTasks: ITypeOfTask[] = [
                         id: "1"
                     }
                 }
+            },
+            {
+                id: "2",
+                title: "Метод Зейделя",
+                type: ESLAEMethods.zeidel,
+                params: {
+                    accuracy: {
+                        label: "Точность",
+                        name: "accuracy",
+                        id: "2"
+                    }
+                }
             }
         ]
     }

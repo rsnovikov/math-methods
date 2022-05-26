@@ -10,5 +10,6 @@ export enum EEquationMethods {
 }
 
 export enum ESLAEMethods {
-    simpleIter = "simpleIter"
+    simpleIter = "simpleIter",
+    zeidel = "zeidel"
 }
